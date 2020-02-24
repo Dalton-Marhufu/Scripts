@@ -1,0 +1,28 @@
+import httpx
+import json
+import ezgmail
+
+#api responce
+quote = httpx.get('http://quotes.rest/qod.json')
+#print(quote.text)
+
+#save responce as text file
+with open('quote.txt', 'w') as f:
+    for quote in quote.text:
+        f.write((quote))
+
+#loading text file as json file
+with open('quote.txt') as json_file:
+    data = json.load(json_file)
+
+#extract quote
+my_quote = data['contents']['quotes'][0]['quote']
+with open('myquote.txt', 'w') as f:
+        f.write((my_quote))
+
+#email quote
+try:
+    ezgmail.send('your email here', 'Todays-Inspirational-Quote!', 'Beep bop this is a bot trying to motivate you!', ['myquote.txt'], cc='email here', bcc='email here')
+    print("email sent")
+except:
+    print("email did not send")
