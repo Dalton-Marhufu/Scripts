@@ -1,0 +1,18 @@
+import requests
+import ezgmail
+
+#api request
+url = "https://icanhazdadjoke.com/"
+responce = requests.get(url, headers={"Accept":"text/plain"}
+
+# saves joke to a txt file
+with open("joke.txt", 'w') as f:
+    for responce in responce.text:
+       f.write((responce))
+
+#attaches txt file and sends an email
+try:
+    ezgmail.send('your email here', 'Todays-joke!', 'Beep bop this is a bot trying to make you laugh', ['joke.txt'], cc='email here', bcc='email here')
+    print("email sent")
+except:
+    print("email did not send")
